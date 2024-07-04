@@ -1,0 +1,6 @@
+# dependencies
+node_modules
+package-lock.json
+dist/bundle.js
+dist/bundle.js.LICENSE.txt
+dist/f4375024e10ad8ac966e.png
