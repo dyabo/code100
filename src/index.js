@@ -1,30 +1,44 @@
-import imageSrc from "./100.png"; // Import the image file
+import imageSrc from "./100.png";
+import data from "./data.json";
 
 function component() {
-  const element = document.createElement("div");
+  // variable to calculate result
+  let dotsCoversImage = 0;
 
-  // Create an Image element and set its source
+  // creating base canvas layer
+  const { width, height, coords } = data;
+  const canvas = document.createElement("canvas");
+  canvas.id = "myCanvas";
+  canvas.width = width;
+  canvas.height = height;
+
+  const ctx = canvas.getContext("2d");
+
   const myImage = new Image();
-  myImage.src = imageSrc; // Use the imported image URL as the src
-  element.appendChild(myImage); // Append the image to the div element
+  myImage.src = imageSrc;
 
-  return element;
+  myImage.onload = function () {
+    // drawing image as a background
+    ctx.drawImage(myImage, 0, 0, canvas.width, canvas.height);
+    coords.map((point) => {
+      const [x, y] = point;
+      // getting background color data
+      const [red, green, blue] = ctx.getImageData(x, y, 1, 1).data;
+      const isBlack = red + green + blue === 0;
+      ctx.beginPath();
+      // drawing dots
+      ctx.arc(x, y, 3, 0, Math.PI * 2, false);
+      ctx.fillStyle = isBlack ? "yellow" : "purple";
+      ctx.fill();
+      ctx.closePath();
+      // set the result
+      if (isBlack) {
+        dotsCoversImage++;
+      }
+    });
+    alert(dotsCoversImage);
+  };
+  return canvas;
 }
 
-document.body.appendChild(component()); // Append the div element to the body
-
-// TODO!!
-const canvas = document.getElementById("myCanvas");
-const ctx = canvas.getContext("2d");
-ctx.beginPath();
-ctx.arc(
-  24, //x center
-  160, //y center
-  30, //r
-  0, //start angle
-  Math.PI * 2, //end angle
-  false, //drawn direction
-);
-ctx.fillStyle = "purple";
-ctx.fill();
-ctx.closePath();
+document.body.appendChild(component());
