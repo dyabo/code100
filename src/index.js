@@ -1,9 +1,55 @@
 import imageSrc from "./100.png";
 import data from "./data.json";
+import {
+  oneDimensions,
+  zeroRadius,
+  zeroWidth,
+  firstZeroDimensions,
+  secondZeroDimensions,
+} from "./dimensions";
+
+function isPointInsideFigures(x, y) {
+  // check if the point is inside the "1"
+  if (
+    x >= oneDimensions.x &&
+    x <= oneDimensions.x + 20 &&
+    y >= oneDimensions.y &&
+    y <= oneDimensions.y + oneDimensions.h
+  ) {
+    return true;
+  }
+
+  // check if the point is inside the first "0"
+  var distanceToCenter1 = Math.sqrt(
+    Math.pow(x - firstZeroDimensions.center, 2) +
+      Math.pow(y - oneDimensions.h, 2),
+  );
+  if (
+    distanceToCenter1 <= zeroRadius + zeroWidth &&
+    distanceToCenter1 >= zeroRadius
+  ) {
+    return true;
+  }
+
+  // check if the point is inside the second "0"
+  var distanceToCenter2 = Math.sqrt(
+    Math.pow(x - secondZeroDimensions.center, 2) +
+      Math.pow(y - oneDimensions.h, 2),
+  );
+  if (
+    distanceToCenter2 <= zeroRadius + zeroWidth &&
+    distanceToCenter2 >= zeroRadius
+  ) {
+    return true;
+  }
+
+  return false;
+}
 
 function component() {
   // variable to calculate result
-  let dotsCoversImage = 0;
+  let dotsCoversImageTricky = 0;
+  let dotsCoversImageTrue = 0;
 
   // creating base canvas layer
   const { width, height, coords } = data;
@@ -22,6 +68,7 @@ function component() {
     ctx.drawImage(myImage, 0, 0, canvas.width, canvas.height);
     coords.map((point) => {
       const [x, y] = point;
+      isPointInsideFigures(x, y) && dotsCoversImageTrue++;
       // getting background color data
       const [red, green, blue] = ctx.getImageData(x, y, 1, 1).data;
       const isBlack = red + green + blue === 0;
@@ -33,10 +80,11 @@ function component() {
       ctx.closePath();
       // set the result
       if (isBlack) {
-        dotsCoversImage++;
+        dotsCoversImageTricky++;
       }
     });
-    alert(dotsCoversImage);
+    alert(`Tricky way ${dotsCoversImageTrue}`);
+    alert(`Using formulae ${dotsCoversImageTrue}`);
   };
   return canvas;
 }

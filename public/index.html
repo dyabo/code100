@@ -6,5 +6,40 @@
     </head>
     <body>
         <script src="/bundle.js"></script>
+        <script>
+            function draw() {
+                var canvas = document.getElementById("myCanvas");
+                if (canvas.getContext) {
+                    var ctx = canvas.getContext("2d");
+
+                    // Draw the "1"
+                    ctx.fillRect(145, 75, 20, 150);
+
+                    // Draw the first "0"
+                    // outter
+                    ctx.beginPath();
+                    ctx.arc(250, 150, 75, 0, Math.PI * 2, true);
+                    ctx.stroke();
+
+                    // inner
+                    ctx.beginPath();
+                    ctx.arc(250, 150, 55, 0, Math.PI * 2, true);
+                    ctx.stroke();
+
+                    // Draw the second "0"
+                    // outter
+                    ctx.beginPath();
+                    ctx.arc(410, 150, 75, 0, Math.PI * 2, true);
+                    ctx.stroke();
+
+                    // inner
+                    ctx.beginPath();
+                    ctx.arc(410, 150, 55, 0, Math.PI * 2, true);
+                    ctx.stroke();
+                }
+            }
+
+            draw();
+        </script>
     </body>
 </html>
