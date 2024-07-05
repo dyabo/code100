@@ -20,7 +20,7 @@ function isPointInsideFigures(x, y) {
   }
 
   // check if the point is inside the first "0"
-  var distanceToCenter1 = Math.sqrt(
+  const distanceToCenter1 = Math.sqrt(
     Math.pow(x - firstZeroDimensions.center, 2) +
       Math.pow(y - oneDimensions.h, 2),
   );
@@ -32,7 +32,7 @@ function isPointInsideFigures(x, y) {
   }
 
   // check if the point is inside the second "0"
-  var distanceToCenter2 = Math.sqrt(
+  const distanceToCenter2 = Math.sqrt(
     Math.pow(x - secondZeroDimensions.center, 2) +
       Math.pow(y - oneDimensions.h, 2),
   );
